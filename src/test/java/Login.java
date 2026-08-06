@@ -1,7 +1,7 @@
 //import org.openqa.selenium.By;
 //import org.testng.annotations.Test;
 //
-//public class Login extends RegisterUser{
+//public class Login extends EndToEnd{
 //
 //    @Test
 //    public void login()

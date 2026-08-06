@@ -11,12 +11,15 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
 
-public class RegisterUser {
+public class EndToEnd {
     public static void main(String[] args) throws InterruptedException {
 
         String prodName = "ADIDAS ORIGINAL";
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
+
+//        LandingPage landingPage = new LandingPage(driver);
+
         driver.get("https://rahulshettyacademy.com/client");
         driver.manage().deleteAllCookies();
 
