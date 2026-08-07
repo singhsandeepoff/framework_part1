@@ -1,3 +1,7 @@
+package framework.abstractcomponents;
+
+import framework.pageobjects.CartPage;
+import framework.pageobjects.OrderPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,9 +23,19 @@ public class AbstractComponents {
     @FindBy(css = "ul li button[routerlink*='cart']")
     WebElement cartHeader;
 
+    @FindBy(css = "ul li button[routerlink*='myorders']")
+    WebElement orderHeader;
+
+
     public void waitForElementToAppear(By findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
+
+    }
+
+    public void waitForElementToAppear(WebElement findBy) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(findBy));
     }
 
     public void waitForElementToDisappear(WebElement element) throws InterruptedException {
@@ -34,8 +48,11 @@ public class AbstractComponents {
 
     public CartPage goToCartPage() {
         cartHeader.click();
-        CartPage cartPage = new CartPage(driver);
-        return cartPage;
+        return new CartPage(driver);
+    }
+        public OrderPage goToOrdersPage() {
+            cartHeader.click();
+            return new OrderPage(driver);
 
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="methods" name="All Test Suite">
+    <groups>
+        <run>
+            <include name="ErrorHandling"/>
+        </run>
+    </groups>
+    <test thread-count="1" name="Error Validation Test">
+        <classes>
+            <class name="framework.tests.ErrorValidationsTest"/>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Base Test">
+        <classes>
+            <class name="framework.testcomponents.BaseTest"/>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Final Runner Test">
+        <classes>
+            <class name="framework.tests.FinalRunnerTest"/>
+        </classes>
+    </test>
+</suite>
+
+
