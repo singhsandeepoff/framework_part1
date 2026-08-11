@@ -5,6 +5,7 @@ import framework.pageobjects.ProductCatalogue;
 import framework.testcomponents.BaseTest;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -18,7 +19,6 @@ public class ErrorValidationsTest extends BaseTest {
         String productName = "IPHONE 13 PRO";
         ProductCatalogue productCatalogue = landingPage.loginApp("lkmlkm@abc.com", "cA2z4J!7bNmwd");
         Assert.assertEquals(landingPage.getErrorMessage(), "Incorrect email or password.");
-
     }
 
     @Test
@@ -33,5 +33,9 @@ public class ErrorValidationsTest extends BaseTest {
         Assert.assertFalse(match);
     }
 
+    @Override
+    public void onFinish(ITestResult result) {
+
+    }
 }
 

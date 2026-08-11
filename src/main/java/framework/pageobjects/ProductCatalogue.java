@@ -18,6 +18,7 @@ public class ProductCatalogue extends AbstractComponents {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+
     @FindBy(css = ".mb-3")
     List<WebElement> products;
 
@@ -30,7 +31,7 @@ public class ProductCatalogue extends AbstractComponents {
     By productsBy = By.cssSelector(".mb-3");
     By addToCart = By.cssSelector(".card-body button:last-of-type");
     By toastMessage = By.cssSelector("#toast-container");
- //   By spinnerBy = By.cssSelector(".ng-animating");
+    //   By spinnerBy = By.cssSelector(".ng-animating");
 
     public List<WebElement> getProductList() {
         waitForElementToAppear(productsBy);
@@ -38,12 +39,17 @@ public class ProductCatalogue extends AbstractComponents {
     }
 
     public WebElement getProductByName(String productName) {
-        WebElement prod = getProductList().stream().filter(product -> product.findElement(By.cssSelector("b")).getText().equalsIgnoreCase(productName)).findFirst().orElse(null);
+        WebElement prod = getProductList().stream().filter(product -> product.findElement(By.cssSelector("b")).getText().trim().equalsIgnoreCase(productName)).findFirst().orElse(null);
         return prod;
     }
 
     public void addProductToCart(String productName) throws InterruptedException {
         WebElement prod = getProductByName(productName);
+
+        if(prod ==null)
+        {
+            throw new RuntimeException("Product '" + productName + "' was not found on the page!");
+        }
         prod.findElement(addToCart).click();
         waitForElementToAppear(toastMessage);
         waitForElementToDisappear(spinner);
