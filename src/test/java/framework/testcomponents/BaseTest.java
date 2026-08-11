@@ -48,8 +48,8 @@ public abstract class BaseTest {
             ChromeOptions options = new ChromeOptions();
             if (browserName.contains("headless")) {
                 options.addArguments("--headless=new");
-                options.addArguments("--window-size=1440,900"); // Standard full-screen resolution for headless
-            }
+// 🟢 Pass window size directly in options for Chrome Headless
+                options.addArguments("--window-size=1920,1080");            }
             driver = new ChromeDriver(options);
 
         } else if (browserName.contains("firefox")) {

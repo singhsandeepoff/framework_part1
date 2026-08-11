@@ -46,6 +46,11 @@ public class AbstractComponents {
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("#toast-container"))));
     }
 
+    public void waitForElementToClickable(WebElement findBy) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("login"))));
+    }
+
     public CartPage goToCartPage() {
         cartHeader.click();
         return new CartPage(driver);

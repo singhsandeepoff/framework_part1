@@ -34,6 +34,7 @@ public class LandingPage extends AbstractComponents {
     public ProductCatalogue loginApp(String email, String password) {
         userEmail.sendKeys(email);
         userPassword.sendKeys(password);
+        waitForElementToClickable(submit);
         submit.click();
         ProductCatalogue productCatalogue = new ProductCatalogue(driver);
         return productCatalogue;
