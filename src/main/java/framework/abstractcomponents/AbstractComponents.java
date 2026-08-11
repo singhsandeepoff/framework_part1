@@ -51,7 +51,7 @@ public class AbstractComponents {
         return new CartPage(driver);
     }
         public OrderPage goToOrdersPage() {
-            cartHeader.click();
+            orderHeader.click();
             return new OrderPage(driver);
 
     }

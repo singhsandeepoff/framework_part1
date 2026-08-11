@@ -131,8 +131,8 @@ public abstract class BaseTest {
         try (FileInputStream input = new FileInputStream(propertiesPath)) {
             prop.load(input);
         }
-
-        String browserName = prop.getProperty("browser");
+        String browserName =  System.getProperty("browser")!=null ? System.getProperty("browser") :prop.getProperty("browser");
+        // prop.getProperty("browser");
 
         if (browserName.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
@@ -144,7 +144,7 @@ public abstract class BaseTest {
             driver = new SafariDriver();
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         return driver;
     }

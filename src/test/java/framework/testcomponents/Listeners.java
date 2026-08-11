@@ -20,7 +20,7 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
         test = extent.createTest(result.getMethod().getMethodName());
-        extentTest.set(test);
+        extentTest.set(test); //unique thread id
     }
 
     @Override
@@ -55,35 +55,12 @@ public class Listeners extends BaseTest implements ITestListener {
         }
     }
 
-//    @Override
-//    public void onTestFailure(ITestResult result) {
-//        test.fail(result.getThrowable());
-//
-//        try {
-//            driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
-//        } catch (Exception e1) {
-//            e1.printStackTrace();
-//        }
-//        // Take screenshot, Attach to the report
-//        String filePath = null;
-//        try {
-//            filePath = getScreenshot(result.getMethod().getMethodName(),driver);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        test.addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
-//    }
-
     @Override
     public void onTestSkipped(ITestResult result) {
         //if skipped
         extentTest.get().log(Status.SKIP, "Test Skipped");
     }
 
-    //    @Override
-//    public void onFinish(ITestContext context) {
-//        extent.flush();
-//    }
     @Override
     public void onFinish(ITestContext context) {
         extent.flush(); // Generates/updates index.html in /reports

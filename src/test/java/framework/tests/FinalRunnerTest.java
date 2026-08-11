@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FinalRunnerTest extends BaseTest {
 
-    String productName = "IPHONE 13 PRO";
+    String productName = "ADIDAS ORIGINAL";
 
     @Test(dataProvider = "getData", groups = {"Purchase"})
     public void finalRunner(HashMap<String, String> input) throws IOException, InterruptedException {
