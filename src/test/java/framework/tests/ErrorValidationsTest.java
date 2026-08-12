@@ -17,7 +17,7 @@ public class ErrorValidationsTest extends BaseTest {
     @Test(groups = {"ErrorHandling"})
     public void LoginErrorValidation() throws IOException, InterruptedException {
 
-        String productName = "IPHONE 13 PRO";
+//        String productName = "IPHONE 13 PRO";
         ProductCatalogue productCatalogue = landingPage.loginApp("lkmlkm@abc.com", "cA2z4J!7bNmwd");
         Assert.assertEquals(landingPage.getErrorMessage(), "Incorrect email or password.");
     }

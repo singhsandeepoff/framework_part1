@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentTest;
 import framework.pageobjects.*;
 import framework.testcomponents.BaseTest;
 import framework.testcomponents.Listeners;
+import framework.testcomponents.TestCounter;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -25,20 +26,20 @@ public class FinalRunnerTest extends BaseTest {
         String datasetLabel = " [" + input.get("productName") + "]";
 
         // Step 1: User Login
-        ExtentTest t1 = Listeners.getExtentReports().createTest("TC01 - User Login" + datasetLabel);
+        ExtentTest t1 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - User Login" + datasetLabel);
         t1.info("Logging into application with email: " + input.get("email"));
         ProductCatalogue productCatalogue = landingPage.loginApp(input.get("email"), input.get("password"));
         t1.pass("Login Successful");
 
         // Step 2: Search & Add Product
-        ExtentTest t2 = Listeners.getExtentReports().createTest("TC02 - Add Product To Cart" + datasetLabel);
+        ExtentTest t2 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - Add Product To Cart" + datasetLabel);
         t2.info("Fetching products and adding: " + input.get("productName"));
         List<WebElement> products = productCatalogue.getProductList();
         productCatalogue.addProductToCart(input.get("productName"));
         t2.pass("Product added to cart successfully");
 
         // Step 3: Cart Display Verification
-        ExtentTest t3 = Listeners.getExtentReports().createTest("TC03 - Verify Cart Display" + datasetLabel);
+        ExtentTest t3 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - Verify Cart Display" + datasetLabel);
         t3.info("Navigating to Cart Page");
         CartPage cartPage = productCatalogue.goToCartPage();
         Boolean match = cartPage.VerifyProdDisplay(input.get("productName"));
@@ -46,30 +47,41 @@ public class FinalRunnerTest extends BaseTest {
         t3.pass("Product verified in Cart");
 
         // Step 4: Checkout & Country Selection
-        ExtentTest t4 = Listeners.getExtentReports().createTest("TC04 - Select Country" + datasetLabel);
+        ExtentTest t4 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - Select Country" + datasetLabel);
         t4.info("Selecting country: India");
         CheckoutPage checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("India");
         t4.pass("Country selected");
 
         // Step 5: Submit Order & Confirmation
-        ExtentTest t5 = Listeners.getExtentReports().createTest("TC05 - Submit Order" + datasetLabel);
+        ExtentTest t5 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - Submit Order" + datasetLabel);
         t5.info("Submitting order");
         ResultPage resultPage = checkoutPage.submitOrder();
-        String confirmMessage = resultPage.getConfirmationMessage();
-//        Assert.assertTrue(confirmMessage.equalsIgnoreCase("Thankyou for the order."));
-        Assert.assertEquals(resultPage.getConfirmationMessage(), "Thankyou for your order.");
-        if (!Objects.equals(resultPage.getConfirmationMessage(), "Thank you for your order.")) {
-        t5.fail("Incorrect confirm message: " + confirmMessage);
-        }
-        else  {
+
+        String actualMessage = resultPage.getConfirmationMessage();
+        String expectedMessage = input.get("confirmationMessage");
+
+        Assert.assertEquals(actualMessage.toLowerCase(), expectedMessage.toLowerCase());
+
+        if (!actualMessage.equalsIgnoreCase(expectedMessage)) {
+            t5.fail("Incorrect confirm message: " + actualMessage);
+        } else {
             t5.pass("Order submitted successfully");
         }
+//        String confirmMessage = resultPage.getConfirmationMessage();
+////        Assert.assertTrue(confirmMessage.equalsIgnoreCase("Thankyou for the order."));
+//        Assert.assertEquals(resultPage.getConfirmationMessage(), "Thankyou for your order.");
+//        if (!Objects.equals(resultPage.getConfirmationMessage(), "Thank you for your order.")) {
+//        t5.fail("Incorrect confirm message: " + confirmMessage);
+//        }
+//        else  {
+//            t5.pass("Order submitted successfully");
+//        }
     }
 
     @Test(dependsOnMethods = {"finalRunner"})
     public void OrderHistoryTest() {
-        ExtentTest t6 = Listeners.getExtentReports().createTest("TC06 - Order History Verification");
+        ExtentTest t6 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - Order History Verification");
         t6.info("Logging in to check Order History");
         ProductCatalogue productCatalogue = landingPage.loginApp("lkmlkm@abc.com", "cA2z4J!7bNm3uwd");
 
