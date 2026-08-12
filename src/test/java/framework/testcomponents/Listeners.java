@@ -17,6 +17,11 @@ public class Listeners extends BaseTest implements ITestListener {
 
     private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
+    // Public getter so test methods can append step-by-step logs
+    public static ExtentTest getTest() {
+        return extentTest.get();
+    }
+
     @Override
     public void onTestStart(ITestResult result) {
         test = extent.createTest(result.getMethod().getMethodName());
