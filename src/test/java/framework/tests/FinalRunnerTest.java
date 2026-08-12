@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class FinalRunnerTest extends BaseTest {
 
@@ -56,8 +57,14 @@ public class FinalRunnerTest extends BaseTest {
         t5.info("Submitting order");
         ResultPage resultPage = checkoutPage.submitOrder();
         String confirmMessage = resultPage.getConfirmationMessage();
-        Assert.assertTrue(confirmMessage.equalsIgnoreCase("Thankyou for the order."));
-        t5.pass("Order placed successfully: " + confirmMessage);
+//        Assert.assertTrue(confirmMessage.equalsIgnoreCase("Thankyou for the order."));
+        Assert.assertEquals(resultPage.getConfirmationMessage(), "Thankyou for your order.");
+        if (!Objects.equals(resultPage.getConfirmationMessage(), "Thank you for your order.")) {
+        t5.fail("Incorrect confirm message: " + confirmMessage);
+        }
+        else  {
+            t5.pass("Order submitted successfully");
+        }
     }
 
     @Test(dependsOnMethods = {"finalRunner"})
