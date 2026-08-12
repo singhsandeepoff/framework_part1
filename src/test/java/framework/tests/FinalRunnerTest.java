@@ -56,27 +56,27 @@ public class FinalRunnerTest extends BaseTest {
         // Step 5: Submit Order & Confirmation
         ExtentTest t5 = Listeners.getExtentReports().createTest(TestCounter.getNextId() + " - Submit Order" + datasetLabel);
         t5.info("Submitting order");
+
         ResultPage resultPage = checkoutPage.submitOrder();
+        String confirmMessage = resultPage.getConfirmationMessage();
+        String expectedMessage = "Thankyou for the order.";
 
-        String actualMessage = resultPage.getConfirmationMessage();
-        String expectedMessage = input.get("confirmationMessage");
-
-        Assert.assertEquals(actualMessage.toLowerCase(), expectedMessage.toLowerCase());
-
-        if (!actualMessage.equalsIgnoreCase(expectedMessage)) {
-            t5.fail("Incorrect confirm message: " + actualMessage);
+        // Compare ignoring case
+        if (confirmMessage.equalsIgnoreCase(expectedMessage)) {
+            t5.pass("Order submitted successfully: " + confirmMessage);
         } else {
-            t5.pass("Order submitted successfully");
+            // Capture screenshot manually on soft assertion failure
+            try {
+                String screenshotPath = getScreenshot("SubmitOrderFailure", driver);
+                t5.fail("Incorrect confirm message: " + confirmMessage)
+                        .addScreenCaptureFromPath(screenshotPath, "Submit Order Failure Screenshot");
+            } catch (IOException e) {
+                t5.fail("Incorrect confirm message: " + confirmMessage + " (Failed to capture screenshot)");
+            }
+
+            // Fail the TestNG test explicitly so build tools know the test failed
+            Assert.fail("Confirmation message mismatch! Expected: " + expectedMessage + " but got: " + confirmMessage);
         }
-//        String confirmMessage = resultPage.getConfirmationMessage();
-////        Assert.assertTrue(confirmMessage.equalsIgnoreCase("Thankyou for the order."));
-//        Assert.assertEquals(resultPage.getConfirmationMessage(), "Thankyou for your order.");
-//        if (!Objects.equals(resultPage.getConfirmationMessage(), "Thank you for your order.")) {
-//        t5.fail("Incorrect confirm message: " + confirmMessage);
-//        }
-//        else  {
-//            t5.pass("Order submitted successfully");
-//        }
     }
 
     @Test(dependsOnMethods = {"finalRunner"})
@@ -98,11 +98,9 @@ public class FinalRunnerTest extends BaseTest {
     }
 
     @Override
-    public void onFinish(ITestResult result) {}
+    public void onFinish(ITestResult result) {
+    }
 }
-
-
-
 
 //package framework.tests;
 //
