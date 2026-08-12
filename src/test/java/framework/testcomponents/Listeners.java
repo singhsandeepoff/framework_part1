@@ -10,10 +10,11 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
-    ExtentReports extent = ExtentReporterNG.getReportObject();
+    static ExtentReports extent = ExtentReporterNG.getReportObject();
 
     private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
@@ -22,9 +23,23 @@ public class Listeners extends BaseTest implements ITestListener {
         return extentTest.get();
     }
 
+    // Inside Listeners.java
+    public static ExtentReports getExtentReports() {
+        return extent;
+    }
+
+
     @Override
     public void onTestStart(ITestResult result) {
-        test = extent.createTest(result.getMethod().getMethodName());
+        String testName = result.getMethod().getMethodName();
+        Object[] params = result.getParameters();
+
+        // If test uses DataProvider, append the dataset identifier (e.g., product name or email)
+        if (params.length > 0 && params[0] instanceof HashMap) {
+            HashMap<String, String> input = (HashMap<String, String>) params[0];
+            testName += " - " + input.get("productName");
+        }
+        test = extent.createTest(testName);
         extentTest.set(test); //unique thread id
     }
 
