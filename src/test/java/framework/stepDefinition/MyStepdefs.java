@@ -3,6 +3,7 @@ package framework.stepDefinition;
 import framework.pageobjects.*;
 import framework.testcomponents.BaseTest;
 import io.cucumber.java.After;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -53,9 +54,13 @@ public class MyStepdefs extends BaseTest {
         Assert.assertTrue(confirmMessage.equalsIgnoreCase(string));
     }
 
+    @Then("{string} message is displayed")
+    public void messageIsDisplayed(String string1) {
+        Assert.assertEquals(string1, "Incorrect email or password.");
+    }
+
     @After
-    public void tearDownScenario()
-    {
+    public void tearDownScenario() {
         tearDown();
     }
 
@@ -63,4 +68,6 @@ public class MyStepdefs extends BaseTest {
     public void onFinish(ITestResult result) {
 
     }
+
+
 }
