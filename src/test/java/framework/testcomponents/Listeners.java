@@ -83,7 +83,9 @@ public class Listeners extends BaseTest implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
-        extent.flush(); // Generates/updates index.html in /reports
+        if (extent != null) {
+            extent.flush(); // REQUIRED to write index.html to disk
+        }
     }
 
     @Override

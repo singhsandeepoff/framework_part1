@@ -3,7 +3,6 @@ package framework.stepDefinition;
 import framework.pageobjects.*;
 import framework.testcomponents.BaseTest;
 import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,28 +14,16 @@ import org.testng.ITestResult;
 import java.io.IOException;
 import java.util.List;
 
-public abstract class MyStepdefs {
-
-    BaseTest baseTest = new BaseTest() {
-        @Override
-        public void onFinish(ITestResult result) {
-
-        }
-    };
+public class MyStepdefs extends BaseTest {
 
     public LandingPage landingPage;
     public ProductCatalogue productCatalogue;
     public ResultPage resultPage;
     String confirmMessage;
 
-
-    @Before
-    public void setupScenario() throws IOException {
-        // 🟢 Cleanly launch app before every Cucumber scenario
-        landingPage = baseTest.launchApplication();
-    }
     @Given("I landed on Ecommerce Page")
-    public void iLandedOnEcommercePage(){
+    public void iLandedOnEcommercePage() throws IOException {
+        landingPage = launchApplication();
     }
 
     @Given("^Logged in with username (.+) and password (.+)$")
@@ -69,6 +56,11 @@ public abstract class MyStepdefs {
     @After
     public void tearDownScenario()
     {
-        baseTest.tearDown();
+        tearDown();
+    }
+
+    @Override
+    public void onFinish(ITestResult result) {
+
     }
 }

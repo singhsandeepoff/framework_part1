@@ -14,5 +14,5 @@ Background:
 
     Examples:
       | name        | password   | productName   |
-      | nnn@abc.com | Matrix@303 | IPHONE 15 PRO |
+      | nnn@abc.com | Matrix@303 | IPHONE 13 PRO |
 

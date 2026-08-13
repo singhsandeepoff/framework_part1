@@ -5,6 +5,7 @@ import framework.pageobjects.*;
 import framework.testcomponents.BaseTest;
 import framework.testcomponents.Listeners;
 import framework.testcomponents.TestCounter;
+import io.cucumber.testng.CucumberOptions;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -15,6 +16,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+@CucumberOptions(
+        features = "src/test/resources/features",
+        glue = "framework.stepDefinition",
+        dryRun = true
+)
 
 public class FinalRunnerTest extends BaseTest {
 
