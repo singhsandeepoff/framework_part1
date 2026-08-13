@@ -17,6 +17,12 @@
             <class name="framework.tests.FinalRunnerTest"/>
         </classes>
     </test>
+
+    <test name="Cucumber Tests">
+        <classes>
+            <class name="framework.cucumber.TestNGTestRunner"/>
+        </classes>
+    </test>
 </suite>
 
 
