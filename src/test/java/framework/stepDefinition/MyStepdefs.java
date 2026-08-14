@@ -71,5 +71,4 @@ public class MyStepdefs extends BaseTest {
     public void onFinish(ITestResult result) {
 
     }
-
 }

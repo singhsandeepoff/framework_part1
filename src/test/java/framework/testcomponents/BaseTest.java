@@ -105,7 +105,7 @@ public abstract class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         if (driver != null) {
-            driver.quit(); // Quits browser session cleanly and kills driver process
+            driver.close();
         }
     }
 
