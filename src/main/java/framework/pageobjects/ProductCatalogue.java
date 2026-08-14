@@ -24,14 +24,11 @@ public class ProductCatalogue extends AbstractComponents {
 
     @FindBy(css = ".ng-animating")
     WebElement spinner;
-//
-//    @FindBy(css = "#toast-container")
-//    WebElement spinner2;
 
     By productsBy = By.cssSelector(".mb-3");
     By addToCart = By.cssSelector(".card-body button:last-of-type");
     By toastMessage = By.cssSelector("#toast-container");
-    //   By spinnerBy = By.cssSelector(".ng-animating");
+    By spinnerBy = By.cssSelector(".ng-animating");
 
     public List<WebElement> getProductList() {
         waitForElementToAppear(productsBy);
@@ -45,26 +42,17 @@ public class ProductCatalogue extends AbstractComponents {
 
     public void addProductToCart(String productName) throws InterruptedException {
         WebElement prod = getProductByName(productName);
-
         if(prod ==null)
         {
             throw new RuntimeException("Product '" + productName + "' was not found on the page!");
         }
         prod.findElement(addToCart).click();
         waitForElementToAppear(toastMessage);
+        try {
+            waitForElementToAppear(spinnerBy);
+        } catch (Exception e) {
+            // If the spinner was too fast and didn't trigger, catch exception & proceed
+        }
         waitForElementToDisappear(spinner);
-//        waitForElementToDisappear(spinner2);
-
-//    public void addProductToCart(String productName) throws InterruptedException {
-//        WebElement prod = getProductByName(productName);
-//        if (prod != null) {
-//            prod.findElement(addToCart).click();
-//            waitForElementToAppear(toastMessage);
-//            waitForElementToDisappear(spinner); // Passing By locator
-//        } else {
-//            System.out.println("Product " + productName + " was not found in the catalogue!");
-//        }
-
     }
-
 }

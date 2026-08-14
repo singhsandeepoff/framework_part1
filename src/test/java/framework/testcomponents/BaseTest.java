@@ -90,6 +90,7 @@ public abstract class BaseTest {
         String filePath = System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
         File file = new File(filePath);
         FileUtils.copyFile(source, file);
+
         return filePath;
     }
 

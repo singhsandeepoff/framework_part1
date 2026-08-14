@@ -21,6 +21,9 @@ public class MyStepdefs extends BaseTest {
     public ProductCatalogue productCatalogue;
     public ResultPage resultPage;
     String confirmMessage;
+    public CheckoutPage checkoutPage;
+    public CartPage cartPage;
+
 
     @Given("I landed on Ecommerce Page")
     public void iLandedOnEcommercePage() throws IOException {
@@ -40,10 +43,10 @@ public class MyStepdefs extends BaseTest {
 
     @And("^Checkout (.+) and submit the order$")
     public void checkoutProductNameAndSubmitTheOrder(String productName) throws Throwable {
-        CartPage cartPage = productCatalogue.goToCartPage();
+        cartPage = productCatalogue.goToCartPage();
         Boolean match = cartPage.VerifyProdDisplay(productName);
         Assert.assertTrue(match, "Product was not found in cart!");
-        CheckoutPage checkoutPage = cartPage.goToCheckout();
+        checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("India");
         resultPage = checkoutPage.submitOrder();
     }
@@ -68,6 +71,5 @@ public class MyStepdefs extends BaseTest {
     public void onFinish(ITestResult result) {
 
     }
-
 
 }

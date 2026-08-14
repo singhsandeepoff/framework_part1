@@ -39,16 +39,17 @@ public class AbstractComponents {
     }
 
     public void waitForElementToDisappear(WebElement element) throws InterruptedException {
-
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ng-animating")));
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("#toast-container"))));
+        wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void waitForElementToClickable(WebElement findBy) {
+    public void waitForElementToClickable(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("login"))));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    public void waitForElementToDisappear(By findBy) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(findBy));
     }
 
     public CartPage goToCartPage() {
